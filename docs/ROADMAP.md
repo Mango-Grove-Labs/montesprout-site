@@ -42,6 +42,12 @@ Two post-tester niceties, re-filed to backlog on 2026-08-16. Neither gates anyth
   tracking script in through the side door (see 19.1) and must not collect anything the privacy page
   doesn't account for.
 
+- **19.3 — headline A/B test** (**downstream of 19.1** — needs analytics and real traffic; pointless
+  before both). Serve one hero headline per visitor, held stable for that visitor, and measure which
+  drives contact. The candidate lines are already chosen and recorded in `docs/DECISIONS.md` §
+  "The hero headline" — this box is the machinery, not the copywriting. Rotation-on-a-timer was
+  considered and rejected in that same entry: it measures nothing and costs the zero-JS property.
+
 ---
 
 ## Phase 20 — School-admin trust one-pager

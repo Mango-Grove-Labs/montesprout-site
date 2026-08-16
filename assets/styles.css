@@ -134,9 +134,19 @@ a { -webkit-tap-highlight-color: transparent; }
   line-height: 1.12;
   letter-spacing: -0.02em;
   color: var(--ink);
-  max-width: 760px;
+  /* Wide enough that the second beat ("Reports from evidence, not memory.") holds one
+     line at the largest step — at 760px it stranded "memory." on a line of its own. */
+  max-width: 900px;
   margin: 0 auto 22px;
   text-wrap: balance;
+}
+
+/* The headline is two beats; break it at the full stop where there's room, and let it
+   flow naturally when there isn't (a hard break on a narrow screen strands a word). */
+.hero__break { display: none; }
+
+@media (min-width: 40rem) {
+  .hero__break { display: inline; }
 }
 
 .hero__sub {

@@ -194,3 +194,27 @@ the migrated entries' deixis is explained above (18.5's "this checkout" means th
 matters because that sentence is 18.7's constraint), Pages' source folder is pinned to `/ (root)` in
 `CLAUDE.md` and `README.md` now that a `/docs` source would serve the roadmap as the website, and
 `README.md` § Layout finally lists the planning layer it had never heard of.
+
+## 2026-08-16 — The hero headline, and a guard that was vacuous until it was tested
+
+The hero is now **"Notes in seconds. Reports from evidence, not memory."** — the shortest line carrying
+both of the product's strengths, where the old one ("You saw something important. Save it in ten
+seconds.") was the only copy on the site making a quantitative promise nothing verifies. The sub-line was
+rewritten to add what the headline leaves implicit rather than restate it. Five runner-up lines are kept
+in DECISIONS for the A/B filed as 19.3; rotation-on-a-timer was considered and declined there, with
+reasons.
+
+Typography: the headline is two beats, so it gets a `<br class="hero__break">` that CSS hides below
+40rem, and `.hero__title`'s measure went 760px → 900px because at the old width the second beat wrapped
+and stranded "memory." alone on a line.
+
+**The bug worth remembering.** Hiding that `<br>` fused its neighbours — mobile read
+"seconds**.**Reports" while desktop looked perfect, because desktop shows the `<br>`. Fixed with a space
+before the tag. Then the first regression test written for it **passed against the planted bug**: this
+suite's parser joins text nodes with a space, so any check on parsed text is blind to fusing *by
+construction*. The real guard works on the raw source and derives the hideable classes from the
+stylesheet (anything CSS sets to `display: none`), plus a test asserting the rule matched something, so
+it can't quietly go vacuous again. Both were red-checked by planting the failure — which is the only
+reason the first version's uselessness was ever noticed.
+
+52 tests green (+2). Verified at 1280px and 390px.

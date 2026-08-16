@@ -149,3 +149,43 @@ site completion truth lives here alone.
    domain. `Allow: /` stays first, so the content pages are unaffected. `tests/` and `tools/` were added
    to the same list — they were already exposed before this run, and splitting the rule would be
    arbitrary.
+
+## 2026-08-16 — The hero headline: one chosen, five kept, rotation declined
+
+**Chosen (live):** *"Notes in seconds. Reports from evidence, not memory."*
+
+It is the shortest line that states **both** of the product's strengths — how cheap capture is, and that
+reports are built from the term's real notes rather than reconstructed from recall. "Not memory" does the
+persuasive work in three words, because reconstructing a term from scraps and recall is exactly what a
+guide does today. The sub-line was rewritten to carry what the headline leaves implicit (who it is for,
+and that a note can be text, photo or voice) rather than restating it.
+
+**Replaced:** *"You saw something important. Save it in ten seconds."* — owner disliked it. Diagnosis
+worth keeping: it read as a landing-page trick, and it was the only line on the site making a
+**quantitative promise nothing verifies**. "In seconds" is idiomatic; "ten seconds" is a number a
+sceptical reader will test.
+
+**Kept as candidates** (owner shortlist, for a future A/B — see ROADMAP § 19.3):
+
+1. "Jot it while it's fresh. Report from evidence, not memory." — the chosen line without any speed
+   number at all; the fallback if "seconds" ever feels like overclaiming.
+2. "Quick notes all term. Real evidence when it counts."
+3. "Reports built from what you saw, not what you remember." — best single-sentence option; drops the
+   capture half to make the memory contrast the whole message.
+4. "Montessori observation, made quick — and finally worth something at report time."
+5. "Montessori observations. For the modern age." — the owner's own line. Positions by category rather
+   than by benefit; the most brand-forward and the least specific, which makes it the most interesting
+   A/B counterweight to the chosen line rather than a near-duplicate of it.
+
+**Rotation declined for now (owner agreed).** Cycling headlines every N seconds was considered and
+rejected on three grounds, none of them taste:
+- **It costs a real property.** This repo is zero-JavaScript and `tests/test_site.py` asserts it. The
+  CSS-only alternative puts every variant in the DOM at once, which means multiple `<h1>`s for crawlers
+  and a screen reader announcing all of them.
+- **It measures nothing.** Rotation is not A/B testing — with no analytics (19.1, itself blocked on the
+  zero-JS decision) and effectively no traffic during private beta, every visitor sees a random line and
+  nothing is learned.
+- **Motion fights the brand.** A hero that swaps text on a timer is the opposite of "calm", and would owe
+  `prefers-reduced-motion` handling.
+The version worth building is a real A/B — one variant per visitor, held stable, measured — which is why
+it is filed as **19.3, explicitly downstream of 19.1**, not as a rotation feature.

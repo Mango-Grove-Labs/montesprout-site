@@ -201,6 +201,49 @@ class PageStructureTests(unittest.TestCase):
             self.assertNotIn("{{", f.read_text(), f)
 
 
+class HiddenElementSpacingTests(unittest.TestCase):
+    """An element CSS can hide must have whitespace beside it in the source.
+
+    `hero__break` is a <br> hidden below 40rem. Written as `seconds.<br…>Reports`, hiding it
+    fuses the neighbours and the mobile hero reads "seconds.Reports" — while desktop, where the
+    <br> is visible, looks perfect. Nothing else here could catch it: the HTML is well-formed,
+    the classes are defined, and this suite's own parser joins text nodes with a space, so even
+    a "no fused sentences" check on the parsed text is **vacuous by construction** (it was
+    written that way first, and only the planted-failure check exposed it).
+
+    So the rule is applied to the raw source, and it derives the set of hideable classes from
+    the stylesheet rather than hard-coding one: any class the CSS sets to `display: none`.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        css = CSS.read_text()
+        cls.hideable = set()
+        for block in re.finditer(r"([^{}]+)\{([^{}]*)\}", css):
+            selector, body = block.group(1), block.group(2)
+            if re.search(r"display\s*:\s*none", body):
+                cls.hideable.update(re.findall(r"\.([A-Za-z][\w-]*)", selector))
+
+    def test_the_rule_has_something_to_check(self):
+        # Guards against the whole class silently passing because nothing matched.
+        self.assertIn("hero__break", self.hideable,
+                      "expected at least the hero break to be hideable — "
+                      "if it was removed, delete this test with it")
+
+    def test_hideable_elements_have_whitespace_beside_them(self):
+        for f in PAGES:
+            html = f.read_text()
+            for cls in sorted(self.hideable):
+                for m in re.finditer(rf'<(\w+)[^>]*class="[^"]*\b{re.escape(cls)}\b[^"]*"[^>]*>', html):
+                    before = html[max(0, m.start() - 1):m.start()]
+                    after = html[m.end():m.end() + 1]
+                    self.assertTrue(
+                        before.isspace() or after.isspace() or not before or not after,
+                        f"{f.name}: <{m.group(1)} class={cls}> has no whitespace on either side — "
+                        f"hiding it will fuse the neighbouring words "
+                        f"({html[max(0, m.start()-25):m.end()+25]!r})")
+
+
 class ClassCoverageTests(unittest.TestCase):
     """Every class used in the HTML exists in the stylesheet, and vice-versa is not required."""
 

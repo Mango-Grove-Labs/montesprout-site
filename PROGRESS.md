@@ -50,6 +50,7 @@
 - [ ] **Phase 19 — Post-launch site growth** (web) <!-- backlog, re-filed from the app repo's ROADMAP § 18 -->
   - [ ] 19.1 Cookieless web analytics — blocked on a zero-JS exemption decision (CLAUDE.md bans scripts; the tests assert zero)
   - [ ] 19.2 "Notify me at launch" email capture
+  - [ ] 19.3 Headline A/B test — candidates already chosen (DECISIONS § "The hero headline"); downstream of 19.1
 - [ ] **Phase 20 — School-admin trust one-pager** (web) <!-- trigger: the school-paid conversation -->
   - [ ] 20.1 Privacy/AI one-pager for school administrators — the school-facing productization of what 18.3 already states
 - [ ] **Phase 21 — Design pass** (web) <!-- post-tester; today's site is deliberately hand-rolled -->
