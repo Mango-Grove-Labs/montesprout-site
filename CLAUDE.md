@@ -59,6 +59,13 @@ Still in the **app** repo, `Mango-Grove-Labs/MonteSprout` (sibling checkout `~/D
   a test compares it against the file's own git date.
 - **Adding a page?** The page, its `canonical`, its `sitemap.xml` entry, and a link from every
   other page's nav *and* footer all move together. The tests fail until they do.
+- **Anything CSS can hide needs whitespace beside it in the source.** A responsive `<br>` or
+  span written as `seconds.<br class="hero__break">Reports` fuses its neighbours the moment the
+  rule hides it — mobile reads "seconds.Reports" while desktop, which shows the break, looks
+  perfect. `HiddenElementSpacingTests` derives the hideable classes from every `display: none`
+  in the stylesheet and checks the **raw source**: the parser joins text nodes with a space, so
+  any assertion over parsed text is vacuous by construction here (the first version of that
+  test was, and only a planted failure exposed it).
 - **No secrets, ever** (public repo): no keys, no tokens, no personal address or phone.
 - **Preview before committing:** `python3 -m http.server`, then `http://localhost:8000`.
 - **Run the tests before committing:** `python3 -m unittest discover -s tests`.

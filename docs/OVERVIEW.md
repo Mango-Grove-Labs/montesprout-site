@@ -13,7 +13,7 @@ The public marketing and legal site for **MonteSprout**, a calm iOS app for Mont
 Mango Grove Labs LLC. Four pages of plain HTML + CSS at **<https://montesprout.app>**, with **zero
 JavaScript** and no build step — the repo root *is* the deployed site, and a push to `main` is a deploy.
 
-It exists for two audiences at once: a teacher deciding whether the app is worth ten seconds of her day,
+It exists for two audiences at once: a teacher deciding whether the app is worth a place in their day,
 and App Store Connect, which needs a reachable privacy-policy URL before a build can go to external
 testers. The second is why the site shipped when it did.
 
@@ -23,7 +23,7 @@ testers. The second is why the site shipped when it did.
 
 | Story | Where | As implemented |
 |---|---|---|
-| Understand the app in ten seconds | `index.html` § hero | One headline about the capture moment — *"You saw something important. Save it in ten seconds."* — over an "In private beta" badge. The page sells that moment, not a feature list, because the incumbents' 1.2★/1.9★ iOS reviews complain about exactly one thing: capture friction. |
+| Understand the app at a glance | `index.html` § hero | One headline carrying both strengths — *"Notes in seconds. Reports from evidence, not memory."* — over an "In private beta" badge, with a sub-line naming what the headline leaves implicit (a line, a photo, a voice note). It sells those two outcomes rather than a feature list, because the incumbents' 1.2★/1.9★ iOS reviews complain about capture friction. The headline breaks at the full stop above 40rem via `.hero__break`; runners-up are kept in DECISIONS for the 19.3 A/B. |
 | See how it actually works | `index.html` § steps (`#about` then a three-step strip) | Notice → Save → Draft, in prose. This strip is the stand-in for real screenshots; adding those is the one open box (18.7). |
 | Judge whether it's different | `index.html` § cards | Five highlight cards. |
 | Learn where the data goes | `privacy.html` | The full policy: what's collected, the pseudonymized AI path, the two telemetry toggles, recovery windows, deletion, contact. Carries a "Last updated" date that a test pins against the file's own git date. |
@@ -45,7 +45,7 @@ assets/     styles.css                   Sunrise tokens at the top, then the pag
             og-image.png                 1200×630, generated
             apple-touch-icon.png         180×180, generated
 CNAME  .nojekyll  robots.txt  sitemap.xml
-tests/      test_site.py                 50 structural tests, stdlib unittest, no install step
+tests/      test_site.py                 52 structural tests, stdlib unittest, no install step
 tools/      make_images.py               regenerates both PNGs (Pillow, build-time only)
             fonts/                       vendored Quicksand + Nunito (OFL) — never served
 docs/  PROGRESS.md  CLAUDE.md  README.md the planning layer (this file's neighbours)

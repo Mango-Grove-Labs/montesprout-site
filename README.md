@@ -32,10 +32,11 @@ No dependencies to install.
 python3 -m unittest discover -s tests
 ```
 
-50 structural tests stand in for the build step there isn't one of: well-formed pages, no
+52 structural tests stand in for the build step there isn't one of: well-formed pages, no
 stray JavaScript, no undefined CSS classes, internal links and anchors that resolve, every
 page reachable from every other, locked Sunrise tokens, brand assets that match the app's
-mark, privacy claims that stay inside what the app actually does, and — the load-bearing
+mark, privacy claims that stay inside what the app actually does, whitespace beside any
+element the CSS can hide (hiding one fuses the words around it), and — the load-bearing
 one — **base-path consistency** (see below). Stdlib only; no install step.
 
 ## Layout
