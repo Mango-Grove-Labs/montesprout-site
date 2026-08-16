@@ -238,6 +238,11 @@ screen were verified against `SampleData.swift` before a single shot was taken �
 Sarah, Primary Room — an exact match for the fixed-UUID fixtures, so no real child appears. And the
 report screenshot needed no AI call at all: the sample data already carried a generated report.
 
+_Re-verified independently in review, since this is the one claim the site cannot take back: the roster
+matches `Models/SampleData.swift`, and `report.webp`'s paragraph is **verbatim** the draft pinned by
+`ReportGenerationTests.sampleDraftIsPinned` — a snapshot test over the fixtures, so that screen provably
+came from sample data rather than a classroom._
+
 Gotchas: **FlowDeck's screenshots are 1× (402×874) with no scale option** — fine for agent verification,
 too soft for a retina page, so the pixel grab (only) went through `simctl` for the native 1206×2622.
 **WebP over PNG** was a 715 KB → 95 KB difference. And the full-page browser screenshot showed three

@@ -39,7 +39,7 @@
      Phase labels continue from the app repo's Phase 18 because this repo's commit messages
      (feat(18.2)…feat(18.5)) reference them; new site phases take 19+ in THIS repo's namespace. -->
 
-- [ ] **Phase 18 — Marketing/legal site** (web) <!-- founding phase; labels match this repo's commit prefixes -->
+- [x] **Phase 18 — Marketing/legal site** (web) <!-- founding phase; labels match this repo's commit prefixes -->
   - [x] 18.2 Site repo + GitHub Pages live
   - [x] 18.6 Favicon, OG image, touch icon + SEO meta — pulled forward into 18.2 (owner call)
   - [x] 18.3 Privacy + support pages
@@ -74,6 +74,7 @@
 > A/B) waits on the zero-JS decision in Needs You; **20** (school-admin one-pager) waits on the
 > school-paid conversation; **21** (design pass) is post-tester. Pick one deliberately rather than by
 > frontier order.
+
 ---
 
 ## Open Decisions (reversible — defaults chosen, proceeding)

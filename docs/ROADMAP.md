@@ -9,24 +9,6 @@
 
 ---
 
-## Phase 18 — Marketing/legal site (montesprout.app)
-
-The site is live at **montesprout.app** on enforced HTTPS with its landing, privacy and support pages.
-Only one box remains open.
-
-- **18.7 — real app screenshots for the landing page** (split out of 18.5, owner call 2026-08-16). A
-  strip of real screens on `index.html`, replacing nothing — it slots between the highlights and the
-  closing panel. The three-step Notice → Save → Draft strip already covers the visual gap, so this is a
-  page that reads finished getting better, not a half-built page getting finished.
-
-  **It needs an app build, so it needs a free checkout.** Building in a `MonteSprout` checkout another
-  session is mid-flight in risks landing `Package.resolved` drift under that session. Use a
-  `sim-sandbox` clone and DEBUG sample data — **never the home phone's real classroom**, whose child
-  names would end up on a public page. Out of scope: a device frame/mockup treatment (that is Phase 21's
-  call), and App Store screenshots (app-side, different aspect ratios and rules).
-
----
-
 ## Phase 19 — Post-launch site growth
 
 Two post-tester niceties, re-filed to backlog on 2026-08-16. Neither gates anything.

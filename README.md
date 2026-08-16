@@ -32,12 +32,13 @@ No dependencies to install.
 python3 -m unittest discover -s tests
 ```
 
-52 structural tests stand in for the build step there isn't one of: well-formed pages, no
+Structural tests stand in for the build step there isn't one of: well-formed pages, no
 stray JavaScript, no undefined CSS classes, internal links and anchors that resolve, every
 page reachable from every other, locked Sunrise tokens, brand assets that match the app's
-mark, privacy claims that stay inside what the app actually does, whitespace beside any
-element the CSS can hide (hiding one fuses the words around it), and — the load-bearing
-one — **base-path consistency** (see below). Stdlib only; no install step.
+mark, screenshots whose declared dimensions match the real files, privacy claims that stay
+inside what the app actually does, whitespace beside any element the CSS can hide (hiding one
+fuses the words around it), and — the load-bearing one — **base-path consistency** (see
+below). Stdlib only; no install step.
 
 ## Layout
 
@@ -46,7 +47,8 @@ index.html                 home
 privacy.html support.html  the legal/help pages (the privacy URL App Store Connect needs)
 404.html                   not-found
 assets/                    styles.css (Sunrise tokens at the top), favicon.svg,
-                           og-image.png, apple-touch-icon.png
+                           og-image.png, apple-touch-icon.png,
+                           screens/ (the three app screenshots — see below)
 .nojekyll robots.txt sitemap.xml
 tests/                     structural tests (unittest, stdlib only)
 tools/                     make_images.py + the vendored OFL fonts it renders with
@@ -81,6 +83,15 @@ python3 tools/make_images.py   # needs Pillow; writes both PNGs, then commit the
 It renders the same leaf beziers and the app's own Quicksand/Nunito faces (vendored under
 `tools/fonts/`, OFL), so output is byte-identical on any machine — regenerating without a
 content change produces no diff. Edit the script, never the PNGs.
+
+## Screenshots
+
+`assets/screens/*.webp` are the opposite: **captured by hand** from a simulator, so nothing
+regenerates them. They show the app's **sample classroom**, never a real one — a sandbox sim
+inherits the home phone's state, so on-screen names get checked against the app's
+`Models/SampleData.swift` before anything is shot, and the page says so under the strip. Their
+declared `width`/`height` are pinned against the real files by a test, because a mismatch ships
+as layout shift. Full recipe in `docs/DECISIONS.md` § "Phase 18.7".
 
 ## Deployment
 

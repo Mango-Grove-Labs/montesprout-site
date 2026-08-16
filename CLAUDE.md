@@ -43,6 +43,15 @@ Still in the **app** repo, `Mango-Grove-Labs/MonteSprout` (sibling checkout `~/D
   fonts it uses are vendored under `tools/fonts/`). Output is deterministic — edit the script
   and re-run, never touch the PNGs by hand. `og:image:width`/`height` are asserted against the
   file's real PNG header, so a resize that skips the meta tags fails the suite.
+- **The screenshots are captured, not generated** — `assets/screens/*.webp`, by hand from a
+  simulator; nothing regenerates them. Two rules, both load-bearing. **Never shoot the home
+  phone**: a sandbox sim clone inherits its state, so check every on-screen name against the
+  app's `Models/SampleData.swift` fixtures *before* capturing — a real child's record on a
+  public page is the failure this repo cannot take back, and the strip carries a line saying
+  the classroom is the sample one. And **declared `width`/`height` must match the file**
+  (`ScreenshotTests` parses the real WebP header; a mismatch ships as layout shift). Full
+  recipe — worktree build, `flowdeck config` save/restore, `simctl` for the pixel grab only —
+  in `docs/DECISIONS.md` § "Phase 18.7".
 - **Base path.** The site serves from the apex **montesprout.app**, so root-absolute paths are
   plain `/…`. `index.html` and the content pages use relative asset paths; `404.html` must use
   **root-absolute** ones (GitHub serves it for any missing depth, so a relative href there
@@ -68,4 +77,6 @@ Still in the **app** repo, `Mango-Grove-Labs/MonteSprout` (sibling checkout `~/D
   test was, and only a planted failure exposed it).
 - **No secrets, ever** (public repo): no keys, no tokens, no personal address or phone.
 - **Preview before committing:** `python3 -m http.server`, then `http://localhost:8000`.
-- **Run the tests before committing:** `python3 -m unittest discover -s tests`.
+- **Run the tests before committing:** `python3 -m unittest discover -s tests`. Don't write the
+  test *count* into README or `docs/` — it went stale in both commits that added tests (42→50→52→55);
+  say "structural tests" and let the suite be the source.
