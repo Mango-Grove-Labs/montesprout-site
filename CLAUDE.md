@@ -3,18 +3,24 @@
 The public marketing/legal site for **MonteSprout**, served by GitHub Pages from this repo's
 root. No build step: a push to `main` is a deploy.
 
-## Where the plan lives (not here)
+## Where the plan lives (here, since 2026-08-16)
 
-This repo carries **no planning docs**. The roadmap, decisions and cursor for the site are in
-the **app** repo, `Mango-Grove-Labs/MonteSprout` (sibling checkout `~/Developer/MonteSprout`):
+**This repo owns the site roadmap.** `PROGRESS.md` at the root is the cursor and the only live
+checklist; `docs/` holds ROADMAP (future) · OVERVIEW (present) · JOURNAL (past) · DECISIONS.
+Read `PROGRESS.md` first — it routes to the rest. Phase labels continue from **Phase 18** because
+this repo's commit messages reference them; new site phases take 19+ in *this* repo's namespace.
 
-- `PROGRESS.md` → **Phase 18** — the live checklist (18.2 repo+Pages · 18.3 privacy/support ·
-  18.5 landing · 18.6 favicon/OG/SEO · 18.4 owner-op DNS)
-- `docs/ROADMAP.md` § 18 — scope prose · `docs/DECISIONS.md` — the *why*
-- `docs/plans/2026-08-16-external-testing-drafts.md` — the **paste-ready privacy + support
-  copy** (§§1–2). Use those drafts; don't re-draft policy prose from scratch.
+There is **no `docs/architecture.md` here, by design** — the four Conventions below are the whole
+engineering contract, and the tokens/mark they point at are owned by the app.
 
-Work on this site is planned and reported from there. Commit here, record there.
+Still in the **app** repo, `Mango-Grove-Labs/MonteSprout` (sibling checkout `~/Developer/MonteSprout`):
+
+- `docs/architecture.md` §8 — the **authoritative** Sunrise tokens · §13 — the data behaviour the
+  privacy page may not exceed
+- `docs/plans/2026-08-16-external-testing-drafts.md` §§1–2 — the **paste-ready privacy + support
+  copy**. Use those drafts rather than re-drafting policy prose — but re-verify each claim against
+  the code, as 18.3 did (three were wrong).
+- Its `docs/JOURNAL.md` / `docs/DECISIONS.md` carry the app-side half of Phase 18.
 
 ## Conventions
 

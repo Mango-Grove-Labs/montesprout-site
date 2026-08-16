@@ -3,7 +3,17 @@
 # Live as of 2026-08-16, when the site moved to the apex montesprout.app: this file now sits
 # at the host root, which is the only place crawlers read robots.txt. It was inert for as long
 # as the site was served from a project subpath (README § Custom domain has the history).
+#
+# The Disallow list is the repo's non-page surface. `.nojekyll` makes Pages serve every file in
+# the repo, so the planning docs added on 2026-08-16 are fetchable at the apex; they are public
+# either way (public repo), but they have no business in search results for the product's domain.
 User-agent: *
 Allow: /
+Disallow: /docs/
+Disallow: /tests/
+Disallow: /tools/
+Disallow: /PROGRESS.md
+Disallow: /CLAUDE.md
+Disallow: /README.md
 
 Sitemap: https://montesprout.app/sitemap.xml

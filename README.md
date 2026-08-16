@@ -105,9 +105,12 @@ the host root, which was not ours while the site lived on a subpath.
 
 ## Planning
 
-This site is one deliverable of the MonteSprout project; its roadmap lives with the app, in
-the `MonteSprout` repo (`PROGRESS.md` → Phase 18, `docs/ROADMAP.md` § 18, rationale in
-`docs/DECISIONS.md`). No plan docs are duplicated here.
+Status: see [`PROGRESS.md`](PROGRESS.md) — the live checklist and what's next.
+
+The rest of the planning layer is in [`docs/`](docs/): `ROADMAP.md` (scope prose for unshipped work),
+`OVERVIEW.md` (the site as built), `JOURNAL.md` (per-phase narrative), `DECISIONS.md` (the *why*).
+The site is still one deliverable of the MonteSprout product — the app repo owns the design tokens,
+the data-behaviour claims the privacy page must stay inside, and the product PRD.
 
 ## Contact
 
