@@ -1,0 +1,340 @@
+/* MonteSprout — site styles
+   Structure follows the Mango Grove Labs company site (same skeleton, no build step);
+   tokens are MonteSprout's **Sunrise** palette + type, transcribed verbatim from the app's
+   docs/architecture.md §8. See docs/DECISIONS.md. This file is served as-is. */
+
+:root {
+  /* Palette — Sunrise (architecture §8; keep these literal, don't "improve" them) */
+  --paper: #FBF6EF;
+  --surface: #FFFDF9;
+  --ink: #3B362D;
+  --ink-soft: #6E6658;
+  --ink-faint: #9C9384;
+  --hair: #ECE4D6;
+  --hair-strong: #DBD1BF;
+  --chip: #F4EEE3;
+  --sage: #7C9A74;
+  --sage-deep: #5E7D58;
+  --sage-soft: #E9F0E2;
+  --sage-line: #CFE0C5;
+  --honey: #D6A24A;
+  --honey-soft: #F7EBD3;
+  --honey-line: #EAD6AE;
+  --accent: #6E8C66;
+  --accent-ink: #FFFFFF;
+  --accent-band: #F1F4EC;
+  --card-shadow: 0 2px 5px rgba(60, 52, 38, 0.10);
+
+  /* Type — Quicksand (headings) + Nunito (body), the app's two faces */
+  --font-head: 'Quicksand', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-body: 'Nunito', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Radii — the app's named scale (architecture §8) */
+  --radius-chip: 12px;
+  --radius-control: 16px;
+  --radius-card: 20px;
+  --radius-sheet: 28px;
+
+  /* Layout */
+  --container: 1040px;
+  --pad-x: clamp(24px, 6vw, 64px);
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a { -webkit-tap-highlight-color: transparent; }
+
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding-left: var(--pad-x);
+  padding-right: var(--pad-x);
+}
+
+/* ===== Header ===== */
+.site-header { border-bottom: 1px solid var(--hair); }
+
+.site-header .container {
+  padding-top: 22px;
+  padding-bottom: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.brand__mark { display: block; flex: none; }
+
+.brand__name {
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 1;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+.nav {
+  display: flex;
+  gap: 28px;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1;
+  color: var(--ink-soft);
+}
+
+.nav a { color: inherit; text-decoration: none; }
+.nav a:hover,
+.nav a:focus-visible { color: var(--ink); }
+
+/* ===== Hero ===== */
+.hero {
+  padding: clamp(64px, 10vw, 108px) 0 clamp(56px, 8vw, 84px);
+  text-align: center;
+}
+
+.badge {
+  display: inline-block;
+  font-weight: 700;
+  font-size: 12.5px;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--sage-deep);
+  background: var(--sage-soft);
+  border: 1px solid var(--sage-line);
+  border-radius: var(--radius-chip);
+  padding: 8px 14px;
+  margin-bottom: 26px;
+}
+
+.hero__title {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: clamp(32px, 5.6vw, 48px);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  max-width: 760px;
+  margin: 0 auto 22px;
+  text-wrap: balance;
+}
+
+.hero__sub {
+  font-weight: 400;
+  font-size: clamp(17px, 2.2vw, 18.5px);
+  line-height: 1.65;
+  color: var(--ink-soft);
+  max-width: 600px;
+  margin: 0 auto 34px;
+  text-wrap: pretty;
+}
+
+/* ===== CTA pills ===== */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 100px;
+}
+
+.pill--accent {
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-size: 15px;
+  line-height: 1;
+  padding: 16px 28px;
+}
+
+.pill--accent:hover,
+.pill--accent:focus-visible { background: var(--sage-deep); }
+
+.pill__arrow { font-size: 16px; }
+
+.pill--light {
+  background: var(--surface);
+  color: var(--sage-deep);
+  border: 1px solid var(--sage-line);
+  font-size: 15.5px;
+  line-height: 1;
+  padding: 15px 26px;
+}
+
+.pill--light:hover,
+.pill--light:focus-visible { background: var(--accent-band); }
+
+/* ===== Sections ===== */
+.section {
+  padding: clamp(56px, 8vw, 76px) 0;
+  border-top: 1px solid var(--hair);
+}
+
+.section-title {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: clamp(24px, 3.4vw, 30px);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin: 0 0 clamp(30px, 4.5vw, 42px);
+}
+
+.eyebrow {
+  font-weight: 700;
+  font-size: 12.5px;
+  line-height: 1;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 20px;
+}
+
+.prose {
+  font-weight: 400;
+  font-size: 16.5px;
+  line-height: 1.7;
+  color: var(--ink-soft);
+  max-width: 680px;
+  text-wrap: pretty;
+}
+
+.prose a { color: var(--sage-deep); }
+
+/* ===== Cards ===== */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(248px, 1fr));
+  gap: 22px;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--hair);
+  border-radius: var(--radius-card);
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+}
+
+.card__strip { height: 6px; }
+.card__strip--sage { background: var(--sage); }
+.card__strip--honey { background: var(--honey); }
+.card__strip--gradient { background: linear-gradient(90deg, var(--sage), var(--honey)); }
+
+.card__body { padding: 26px 24px 28px; }
+
+.card__title {
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 18.5px;
+  line-height: 1.25;
+  color: var(--ink);
+  margin: 0 0 10px;
+}
+
+.card__text {
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+/* ===== Contact panel ===== */
+.contact { padding: 0 0 clamp(56px, 8vw, 84px); }
+
+.contact__panel {
+  background: var(--sage-deep);
+  border-radius: var(--radius-sheet);
+  padding: clamp(40px, 6vw, 56px) clamp(28px, 5vw, 48px);
+  text-align: center;
+}
+
+.contact__title {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: clamp(22px, 3vw, 27px);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: #fff;
+  margin: 0 0 12px;
+}
+
+.contact__text {
+  font-weight: 400;
+  font-size: 15.5px;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0 auto 26px;
+  max-width: 460px;
+}
+
+/* ===== Footer ===== */
+.site-footer { border-top: 1px solid var(--hair); }
+
+.site-footer .container {
+  padding-top: 30px;
+  padding-bottom: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 22px;
+  flex-wrap: wrap;
+}
+
+.footer__info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-weight: 400;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--ink-faint);
+}
+
+.footer__name {
+  color: var(--ink-soft);
+  font-weight: 700;
+}
+
+.footer__info a { color: inherit; text-decoration: none; }
+.footer__info a:hover,
+.footer__info a:focus-visible { text-decoration: underline; }
+
+.footer__copy {
+  font-weight: 400;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--ink-faint);
+}
+
+/* ===== Accessibility ===== */
+a:focus-visible {
+  outline: 2px solid var(--sage-deep);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Page not found — MonteSprout</title>
+
+  <!-- A not-found page should never be indexed. -->
+  <meta name="robots" content="noindex">
+  <meta name="description" content="The page you were looking for could not be found at MonteSprout.">
+  <meta name="theme-color" content="#6E8C66">
+
+  <!-- Fonts: Quicksand (headings) + Nunito (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Absolute (site-root) paths: GitHub serves this one file for ANY missing depth under the
+       site, so a relative href would resolve differently per URL. Both values move together when
+       the custom domain lands — see README "Custom domain". -->
+  <link rel="icon" type="image/svg+xml" href="/montesprout-site/assets/favicon.svg">
+  <!-- Safari ignores an SVG in this slot, so the touch icon is a real PNG (tools/make_images.py). -->
+  <link rel="apple-touch-icon" href="/montesprout-site/assets/apple-touch-icon.png">
+
+  <link rel="stylesheet" href="/montesprout-site/assets/styles.css">
+</head>
+<body>
+
+  <!-- ===== Header ===== -->
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="/montesprout-site/">
+        <svg class="brand__mark" width="26" height="26" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MonteSprout logo">
+          <!-- The app's leaf mark (DesignSystem/Motifs.swift, LeafArt) — keep the two in sync. -->
+          <path d="M12 2C5.5 2 2 5.5 2 12c6.5 0 10-3.5 10-10Z" fill="#7C9A74" stroke="#7C9A74" stroke-width="1.2" stroke-linejoin="round"></path>
+          <path d="M4.5 9.5C6.5 8.5 8.5 6.5 9.5 4.5" stroke="#FFFFFF" stroke-opacity="0.5" stroke-width="1" stroke-linecap="round"></path>
+        </svg>
+        <span class="brand__name">MonteSprout</span>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <a href="/montesprout-site/#about">About</a>
+        <a href="mailto:support@mangogrovelabs.com">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===== Main ===== -->
+  <main class="container">
+
+    <section class="hero">
+      <h1 class="hero__title">Page not found</h1>
+      <p class="hero__sub">The page you were looking for doesn&rsquo;t exist or may have moved. Let&rsquo;s get you back on track.</p>
+      <a class="pill pill--accent" href="/montesprout-site/">Back to home <span class="pill__arrow" aria-hidden="true">&rarr;</span></a>
+    </section>
+
+  </main>
+
+  <!-- ===== Footer ===== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer__info">
+        <span class="footer__name">MonteSprout</span>
+        <span>An app by Mango Grove Labs LLC</span>
+        <a href="mailto:support@mangogrovelabs.com">support@mangogrovelabs.com</a>
+      </div>
+      <div class="footer__copy">&copy; 2026 Mango Grove Labs LLC</div>
+    </div>
+  </footer>
+
+</body>
+</html>

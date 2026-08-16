@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" role="img" aria-label="MonteSprout">
+  <!-- The app's leaf mark, verbatim from DesignSystem/Motifs.swift (LeafArt, viewBox 14).
+       The header mark in index.html / 404.html is the same two paths — keep all three in sync. -->
+  <rect width="14" height="14" rx="3" fill="#FBF6EF"/>
+  <path d="M12 2C5.5 2 2 5.5 2 12c6.5 0 10-3.5 10-10Z" fill="#7C9A74" stroke="#7C9A74" stroke-width="1.2" stroke-linejoin="round"/>
+  <path d="M4.5 9.5C6.5 8.5 8.5 6.5 9.5 4.5" stroke="#FFFFFF" stroke-opacity="0.5" stroke-width="1" stroke-linecap="round" fill="none"/>
+</svg>
