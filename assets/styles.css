@@ -352,6 +352,77 @@ a { -webkit-tap-highlight-color: transparent; }
   margin: 0;
 }
 
+/* ===== Lead paragraph (the "what it is" beat under the hero) ===== */
+.lead {
+  padding: clamp(52px, 7vw, 76px) 0;
+  border-top: 1px solid var(--hair);
+  text-align: center;
+}
+
+.lead__text {
+  font-weight: 400;
+  font-size: clamp(19px, 2.6vw, 22px);
+  line-height: 1.6;
+  color: var(--ink);
+  margin: 0 auto;
+  max-width: 660px;
+  text-wrap: pretty;
+}
+
+.lead__note {
+  font-size: 15.5px;
+  line-height: 1.7;
+  color: var(--ink-soft);
+  margin: 18px auto 0;
+  max-width: 600px;
+  text-wrap: pretty;
+}
+
+/* ===== Numbered steps ===== */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: clamp(24px, 4vw, 38px);
+  counter-reset: step;
+}
+
+.step { counter-increment: step; }
+
+.step__num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 100px;
+  background: var(--sage-soft);
+  border: 1px solid var(--sage-line);
+  color: var(--sage-deep);
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 16px;
+}
+
+.step__num::before { content: counter(step); }
+
+.step__title {
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 18.5px;
+  line-height: 1.25;
+  color: var(--ink);
+  margin: 0 0 9px;
+}
+
+.step__text {
+  font-weight: 400;
+  font-size: 15.5px;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
 /* ===== Contact panel ===== */
 .contact { padding: 0 0 clamp(56px, 8vw, 84px); }
 
