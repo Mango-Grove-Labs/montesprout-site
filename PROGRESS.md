@@ -84,7 +84,10 @@
 
 ## Needs You (irreversible / load-bearing — halts the run)
 
-- _none_
+- **Does the site get JavaScript for analytics?** — 19.1 needs either a script tag, which changes this
+  repo's zero-JS convention *and* the test that asserts it (so it needs a `docs/DECISIONS.md` entry
+  first), or a log-based/serverless approach that keeps the property. Options: cookieless script /
+  server-side only / drop 19.1. (not blocking until 19.1)
 
 The app repo's `PROGRESS.md` § Phase 18 still shows the site checklist from before this repo owned it.
 That is a one-line cleanup over there, not a halt here — see DECISIONS § "/adopt".

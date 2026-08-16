@@ -51,6 +51,10 @@ tools/      make_images.py               regenerates both PNGs (Pillow, build-ti
 docs/  PROGRESS.md  CLAUDE.md  README.md the planning layer (this file's neighbours)
 ```
 
+`.nojekyll` makes Pages serve every one of those files raw, including the planning layer — public
+either way, so `robots.txt` disallows `/docs/`, `/tests/`, `/tools/` and the three root docs to keep
+them out of search results rather than out of reach.
+
 ## How it deploys
 
 ```mermaid

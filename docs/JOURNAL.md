@@ -9,6 +9,13 @@
 > originals are untouched over there — this is a copy, not a move, and the site half of that history now
 > lives with the site. They were written while the site was still a *project* Pages site, so URLs inside
 > them read `mango-grove-labs.github.io/montesprout-site/…`; 18.4 is the entry where that changes.
+>
+> **They were written from the app repo, and kept verbatim — so read their deixis from there.** Inside
+> those five entries "this repo" / "this checkout" / "beside this one" mean the **app** repo
+> (`~/Developer/MonteSprout`), not this one. Two lines depend on it: 18.2's "sibling checkout beside
+> this one" is the site repo sitting beside the *app* checkout, and 18.5's "building in this checkout
+> risks the `Package.resolved` drift trap" is about the *app* checkout — this repo has no Swift package
+> and nothing to drift. That second line is 18.7's real constraint, so it matters.
 
 ---
 
@@ -174,3 +181,16 @@ domain.
 
 Doctor **clean**, parser green (`Phase 18/21 · 18.7/18.7 · 5/10 sub-phases · 50%`), 50 site tests still
 green — no page, asset or test was touched.
+
+**Then it was reviewed, and the review was worth running.** `/adopt` hands straight to `/commit`, whose
+own contract says it assumes review already happened — so the convergence commit went out unreviewed,
+and green tests plus a clean doctor were not evidence otherwise: both were green while two real defects
+sat in the diff. The first was self-inflicted routing — `CLAUDE.md`'s zero-JS escape hatch still said to
+record the decision in the *app* repo's `DECISIONS.md`, one bullet below a section this same commit had
+rewritten, and it happens to be the gate on 19.1. The second: 19.1's blocking question (does the site
+get JavaScript?) lived only in prose, while `Needs You` — the surface fleet, `/progress` and autopilot
+actually read — said `_none_`; it is now registered with the deferred tag. Three smaller fixes followed:
+the migrated entries' deixis is explained above (18.5's "this checkout" means the *app* checkout, which
+matters because that sentence is 18.7's constraint), Pages' source folder is pinned to `/ (root)` in
+`CLAUDE.md` and `README.md` now that a `/docs` source would serve the roadmap as the website, and
+`README.md` § Layout finally lists the planning layer it had never heard of.

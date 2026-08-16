@@ -25,9 +25,13 @@ Still in the **app** repo, `Mango-Grove-Labs/MonteSprout` (sibling checkout `~/D
 ## Conventions
 
 - **Plain HTML + CSS. Zero JavaScript.** No bundler, no framework, no npm. If a page ever
-  needs a script, that is a decision to record in the app repo's `DECISIONS.md` first — the
-  test suite asserts a script count of zero on every page.
+  needs a script, that is a decision to record in **this repo's** `docs/DECISIONS.md` first —
+  the test suite asserts a script count of zero on every page. (Open now: 19.1 wants analytics;
+  see `PROGRESS.md` § Needs You.)
 - **`.nojekyll` is intentional** — Pages serves files raw. Don't remove it.
+- **Pages source stays `main` / `/ (root)`.** Since the planning docs landed (2026-08-16) the
+  repo has a `docs/` folder, so GitHub's other source option — `main` / `/docs` — would quietly
+  serve `ROADMAP.md` and friends *as the website*. It was harmless before; it isn't now.
 - **Sunrise tokens are transcribed, not invented.** The palette / type / radius values at the
   top of `assets/styles.css` come from the app's `docs/architecture.md` §8. Changing one here
   without changing it there is drift, and `tests/test_site.py` fails on it.
@@ -46,7 +50,8 @@ Still in the **app** repo, `Mango-Grove-Labs/MonteSprout` (sibling checkout `~/D
   `CNAME` file, so removing it flips every expectation back to the old project subpath — see
   README § Custom domain.
 - **Privacy copy is a contract, not marketing.** Anything the site claims about what leaves a
-  teacher's device must match the app's behaviour (architecture §13). If a claim and the code
+  teacher's device must match the app's behaviour (the app's `docs/architecture.md` §13 — there
+  is no architecture doc in this repo). If a claim and the code
   disagree, that's a bug to surface in the app repo — never soften the page to fit. Before
   editing `privacy.html`, **re-verify the touched claim against the code**, the way 18.3 did:
   the drafts annex in the app repo carries a claim→source trace table, and two of its rows were

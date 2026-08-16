@@ -50,7 +50,13 @@ assets/                    styles.css (Sunrise tokens at the top), favicon.svg,
 tests/                     structural tests (unittest, stdlib only)
 tools/                     make_images.py + the vendored OFL fonts it renders with
                            (build-time only — never served)
+PROGRESS.md                the cursor: live roadmap, current status, what's next
+docs/                      ROADMAP (future) · OVERVIEW (present) · JOURNAL (past) ·
+                           DECISIONS · PRD pointer — planning only, never served content
 ```
+
+Pages serves this repo raw (`.nojekyll`), so the last two *are* fetchable at the apex — they're
+public either way, and `robots.txt` keeps them out of search results.
 
 ## Adding a page
 
@@ -82,6 +88,10 @@ Deploy is automatic: commit and push to `main`; GitHub Pages publishes the root 
 
 GitHub Pages setup (already done): Settings → Pages → **Deploy from a branch** →
 `main` / `/ (root)`.
+
+**Leave the folder on `/ (root)`.** The other option in that dropdown is `/docs`, and since the
+planning docs landed this repo has one — selecting it would serve `ROADMAP.md` and friends as the
+website. Harmless before; not any more.
 
 ## Custom domain
 

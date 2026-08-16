@@ -35,7 +35,8 @@ Two post-tester niceties, re-filed to backlog on 2026-08-16. Neither gates anyth
   repo's standing convention is *plain HTML + CSS, zero JavaScript*, and `tests/test_site.py` asserts a
   script count of zero on every page. Adding analytics means either a script tag — which requires a
   recorded decision in `docs/DECISIONS.md` and a change to the test — or a log-based/serverless approach
-  that keeps the zero-JS property. Decide that first; the integration itself is small either way.
+  that keeps the zero-JS property. Decide that first; the integration itself is small either way. The
+  open question is registered in `PROGRESS.md` § Needs You, tagged `(not blocking until 19.1)`.
 - **19.2 — "notify me at launch" email capture.** A static site has no backend, so this is a form
   action pointed at a hosted list provider, or a `mailto:`. Whatever is chosen must not smuggle a
   tracking script in through the side door (see 19.1) and must not collect anything the privacy page
