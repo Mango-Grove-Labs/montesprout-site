@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Privacy Policy — MonteSprout</title>
+
+  <!-- SEO -->
+  <meta name="description" content="How MonteSprout handles your classroom records: local-first storage, your own private iCloud, the one time note text leaves your device, and optional anonymous analytics.">
+  <link rel="canonical" href="https://mango-grove-labs.github.io/montesprout-site/privacy.html">
+  <meta name="theme-color" content="#6E8C66">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="MonteSprout">
+  <meta property="og:title" content="Privacy Policy — MonteSprout">
+  <meta property="og:description" content="Local-first by default. What stays on your device, the one time note text leaves it, and how to turn off analytics.">
+  <meta property="og:url" content="https://mango-grove-labs.github.io/montesprout-site/privacy.html">
+  <meta property="og:image" content="https://mango-grove-labs.github.io/montesprout-site/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="MonteSprout — small daily observations, turned into parent-ready reports.">
+
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Privacy Policy — MonteSprout">
+  <meta name="twitter:description" content="Local-first by default. What stays on your device, the one time note text leaves it, and how to turn off analytics.">
+  <meta name="twitter:image" content="https://mango-grove-labs.github.io/montesprout-site/assets/og-image.png">
+
+  <!-- Fonts: Quicksand (headings) + Nunito (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <!-- Safari ignores an SVG in this slot, so the touch icon is a real PNG (tools/make_images.py). -->
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+  <!-- ===== Header ===== -->
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="index.html">
+        <svg class="brand__mark" width="26" height="26" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MonteSprout logo">
+          <!-- The app's leaf mark (DesignSystem/Motifs.swift, LeafArt) — keep the two in sync. -->
+          <path d="M12 2C5.5 2 2 5.5 2 12c6.5 0 10-3.5 10-10Z" fill="#7C9A74" stroke="#7C9A74" stroke-width="1.2" stroke-linejoin="round"></path>
+          <path d="M4.5 9.5C6.5 8.5 8.5 6.5 9.5 4.5" stroke="#FFFFFF" stroke-opacity="0.5" stroke-width="1" stroke-linecap="round"></path>
+        </svg>
+        <span class="brand__name">MonteSprout</span>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <a href="index.html#about">About</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="support.html">Support</a>
+        <a href="mailto:support@mangogrovelabs.com">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===== Main ===== -->
+  <main class="container">
+    <article class="page">
+
+      <h1 class="page__title">MonteSprout Privacy Policy</h1>
+      <p class="page__meta">Last updated 16 August 2026 &middot; Mango Grove Labs LLC &middot; <a href="mailto:support@mangogrovelabs.com">support@mangogrovelabs.com</a></p>
+
+      <section class="summary">
+        <h2>The short version</h2>
+        <p>MonteSprout is local-first. Your classroom records &mdash; observations, student names, photos, videos and voice notes &mdash; are stored on your device and in your own private iCloud. We run no accounts and no classroom-data servers, and we cannot read your classroom records.</p>
+        <p>There are two narrow exceptions, both described in full below. When you generate a report, the note text is sent for AI drafting with the child&rsquo;s name swapped for a stand-in first, and neither we nor the AI provider keeps a copy. And the app can send anonymous crash and usage statistics, which you can turn off in <strong>Settings &rarr; Privacy</strong>.</p>
+      </section>
+
+      <div class="legal">
+
+        <h2 id="what-you-put-in">1. What you put in, and where it lives</h2>
+        <p>Observations, student names (the app stores a first name and an optional last initial, never a surname), curriculum records, report drafts, photos, videos and voice notes are stored in a database on your device.</p>
+        <p>If you are signed into iCloud, they sync through your <strong>private</strong> iCloud database (Apple CloudKit), which only your Apple account &mdash; and co-teachers you explicitly invite to a classroom &mdash; can reach. Mango Grove Labs has no access to this data and operates no server that stores it.</p>
+
+        <h2 id="ai-drafting">2. AI report drafting &mdash; the one time note text leaves your device</h2>
+        <p>When you ask MonteSprout to draft a report, the app sends the relevant observation text and curriculum or lesson names through our relay server to an AI provider (currently OpenAI). <strong>The child&rsquo;s name is replaced with a stand-in before anything is sent</strong>, and the real name is restored on your device afterwards. Photos, videos and audio are never sent.</p>
+        <p>The relay does not store or log your text. The only record kept is an anonymous usage row &mdash; token counts, timing and a random install identifier &mdash; used to enforce a rate limit. Our AI-provider organization is configured not to log, share or train on your content; the provider may retain API traffic briefly for abuse monitoring, after which it is deleted.</p>
+        <p>One honest limitation: if your note text mentions <strong>other</strong> children by name, those names travel as written. The app asks your permission before your first generation and says so plainly at that moment. You can use MonteSprout fully without ever generating an AI report.</p>
+
+        <h2 id="analytics">3. Anonymous analytics and crash reports (optional)</h2>
+        <p>To find bugs and understand which features help, the app can send crash reports (Sentry) and anonymous usage events (PostHog) &mdash; things like &ldquo;a report was exported&rdquo;, never the content of your notes.</p>
+        <p>The app has no general-purpose &ldquo;record anything&rdquo; call: every event is one of a fixed, hand-written list, and an event property can only be a number, a flag, or a short label &mdash; never a nested object or a piece of your writing. The events that accompany observations and media are covered by tests asserting exactly that.</p>
+        <p>The only identifier is a random install ID created on your device; it is not linked to you and is replaced if you reinstall. As with any internet service, the providers receive your IP address as part of transport. Both toggles are in <strong>Settings &rarr; Privacy</strong> and take effect immediately. We do not use advertising identifiers, we do not track you across apps or websites, and we never sell data.</p>
+
+        <h2 id="beta">4. Beta (TestFlight) feedback</h2>
+        <p>If you are testing a beta build, a shake-to-report tool lets you send us a message, optionally with screenshots you choose and &mdash; only if you type them &mdash; your name and email. Beta builds also share crash and usage data with us through Apple TestFlight, as described in Apple&rsquo;s TestFlight privacy notice. <strong>The feedback tool does not exist in App Store builds.</strong></p>
+
+        <h2 id="notifications">5. Notifications</h2>
+        <p>Reminders are scheduled locally on your device; nothing about them is sent to us. The app also receives silent background pushes from Apple&rsquo;s CloudKit to know when your own iCloud data has changed &mdash; these carry no content and are not sent by us.</p>
+
+        <h2 id="retention">6. Retention and deletion &mdash; you hold the keys</h2>
+        <p>Deleting is built in. Individual observations, students, classrooms and reports can be deleted, with a recovery window you choose in Settings (30 days, 90 days, or never auto-remove), after which they are permanently erased &mdash; and &ldquo;Delete forever&rdquo; is always available on demand. Permanently deleted items are gone from your device and from your iCloud.</p>
+        <p>You can export your records at any time from <strong>Settings &rarr; Export data</strong>, as JSON (complete and re-importable) and as Markdown (a readable document). Photos, videos and voice notes are <em>listed</em> in the export rather than embedded &mdash; the files themselves stay on your device and in your iCloud backup, which is where they belong.</p>
+        <p>Removing the app and its iCloud data removes your classroom records entirely. We hold no copy.</p>
+
+        <h2 id="children">7. Children&rsquo;s data</h2>
+        <p>MonteSprout is a tool for teachers and is not directed to children. Observation records concern students in your care: they are entered by you, stay under your control as described above, and are never used by us for any purpose &mdash; we cannot read them.</p>
+        <p>For schools with data-processing requirements (FERPA, GDPR and similar): the practical answers are that classroom records live on the teacher&rsquo;s device and in her own private iCloud with no copy held by us, and that the AI drafting path is pseudonymized, not retained, and never in our custody. Write to us for written detail.</p>
+
+        <h2 id="changes">8. Changes and contact</h2>
+        <p>We will update this page when our practices change, and note the date at the top. Questions or data requests: <a href="mailto:support@mangogrovelabs.com">support@mangogrovelabs.com</a>.</p>
+
+      </div>
+    </article>
+  </main>
+
+  <!-- ===== Footer ===== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer__info">
+        <div class="footer__links">
+          <a href="index.html">Home</a>
+          <a href="privacy.html">Privacy</a>
+          <a href="support.html">Support</a>
+        </div>
+        <span class="footer__name">MonteSprout</span>
+        <span>An app by Mango Grove Labs LLC</span>
+        <a href="mailto:support@mangogrovelabs.com">support@mangogrovelabs.com</a>
+      </div>
+      <div class="footer__copy">&copy; 2026 Mango Grove Labs LLC</div>
+    </div>
+  </footer>
+
+</body>
+</html>

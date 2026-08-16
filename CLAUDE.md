@@ -39,7 +39,13 @@ Work on this site is planned and reported from there. Commit here, record there.
   `CNAME` file — see README § Custom domain.
 - **Privacy copy is a contract, not marketing.** Anything the site claims about what leaves a
   teacher's device must match the app's behaviour (architecture §13). If a claim and the code
-  disagree, that's a bug to surface in the app repo — never soften the page to fit.
+  disagree, that's a bug to surface in the app repo — never soften the page to fit. Before
+  editing `privacy.html`, **re-verify the touched claim against the code**, the way 18.3 did:
+  the drafts annex in the app repo carries a claim→source trace table, and two of its rows were
+  already wrong by the time the page was written. Move the "Last updated" date with any edit —
+  a test compares it against the file's own git date.
+- **Adding a page?** The page, its `canonical`, its `sitemap.xml` entry, and a link from every
+  other page's nav *and* footer all move together. The tests fail until they do.
 - **No secrets, ever** (public repo): no keys, no tokens, no personal address or phone.
 - **Preview before committing:** `python3 -m http.server`, then `http://localhost:8000`.
 - **Run the tests before committing:** `python3 -m unittest discover -s tests`.

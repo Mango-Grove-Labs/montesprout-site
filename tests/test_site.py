@@ -30,7 +30,15 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 INDEX = ROOT / "index.html"
+PRIVACY = ROOT / "privacy.html"
+SUPPORT = ROOT / "support.html"
 NOT_FOUND = ROOT / "404.html"
+
+# Every served page. `CONTENT` pages are only ever fetched at their own URL, so they may
+# use relative hrefs; 404.html is served by GitHub for ANY missing depth, so its links
+# must be root-absolute or they resolve differently per URL.
+CONTENT = (INDEX, PRIVACY, SUPPORT)
+PAGES = CONTENT + (NOT_FOUND,)
 CSS = ROOT / "assets" / "styles.css"
 CNAME = ROOT / "CNAME"
 EMAIL = "support@mangogrovelabs.com"
@@ -142,48 +150,54 @@ def parse(path):
     return p
 
 
+def last_commit_date(path):
+    """YYYY-MM-DD of the last commit touching `path`, or "" if it has no history."""
+    return subprocess.run(
+        ["git", "log", "-1", "--format=%cs", "--", str(path.relative_to(ROOT))],
+        cwd=ROOT, capture_output=True, text=True).stdout.strip()
+
+
 class PageStructureTests(unittest.TestCase):
-    """Both served pages: well-formed, single-h1, no JS, no inline styles."""
+    """Every served page: well-formed, single-h1, no JS, no inline styles."""
 
     def test_files_exist(self):
-        for f in (INDEX, NOT_FOUND, CSS, ROOT / ".nojekyll",
-                  ROOT / "robots.txt", ROOT / "sitemap.xml"):
+        for f in PAGES + (CSS, ROOT / ".nojekyll",
+                          ROOT / "robots.txt", ROOT / "sitemap.xml"):
             self.assertTrue(f.exists(), f"missing {f.relative_to(ROOT)}")
 
     def test_doctype_and_lang(self):
-        for f in (INDEX, NOT_FOUND):
+        for f in PAGES:
             head = f.read_text(  )[:200].lower()
             self.assertIn("<!doctype html>", head, f)
             self.assertIn('<html lang="en">', head, f)
 
     def test_single_h1(self):
-        for f in (INDEX, NOT_FOUND):
+        for f in PAGES:
             self.assertEqual(parse(f).tags.count("h1"), 1, f)
 
     def test_pages_render_without_javascript(self):
-        for f in (INDEX, NOT_FOUND):
+        for f in PAGES:
             self.assertEqual(parse(f).scripts, 0,
                              f"{f.name}: the site is deliberately script-free")
 
     def test_no_inline_styles(self):
-        for f in (INDEX, NOT_FOUND):
+        for f in PAGES:
             self.assertEqual(parse(f).inline_styles, 0,
                              f"{f.name}: styles belong in assets/styles.css")
 
     def test_local_stylesheet_linked_once_per_page(self):
         # css_links also holds the Google Fonts sheet, which is rel=stylesheet too.
-        for f in (INDEX, NOT_FOUND):
+        for f in PAGES:
             local = [h for h in parse(f).css_links if not h.startswith("http")]
             self.assertEqual(local, [self.expected_css(f)], f)
 
     @staticmethod
     def expected_css(page):
-        # index.html is only ever served at the site root, so it may use a relative
-        # href; 404.html is served at arbitrary depth and must be root-absolute.
-        return "assets/styles.css" if page == INDEX else BASE_PATH + "assets/styles.css"
+        return ("assets/styles.css" if page in CONTENT
+                else BASE_PATH + "assets/styles.css")
 
     def test_no_template_syntax_leaked(self):
-        for f in (INDEX, NOT_FOUND):
+        for f in PAGES:
             self.assertNotIn("{{", f.read_text(), f)
 
 
@@ -195,7 +209,7 @@ class ClassCoverageTests(unittest.TestCase):
         cls.defined = set(re.findall(r"\.([A-Za-z][\w-]*)", CSS.read_text()))
 
     def test_every_used_class_is_defined(self):
-        for f in (INDEX, NOT_FOUND):
+        for f in PAGES:
             used = parse(f).classes
             missing = sorted(used - self.defined)
             self.assertEqual(missing, [], f"{f.name}: classes with no CSS rule: {missing}")
@@ -209,7 +223,7 @@ class ContactTests(unittest.TestCase):
                       "the address must be readable on the page, not only in an href")
 
     def test_mailto_links_are_correct(self):
-        for f in (INDEX, NOT_FOUND):
+        for f in PAGES:
             mailtos = [h for h, _ in parse(f).anchors if h.startswith("mailto:")]
             self.assertTrue(mailtos, f"{f.name}: no contact link")
             for h in mailtos:
@@ -234,7 +248,7 @@ class BasePathTests(unittest.TestCase):
     PROJECT_PATH = "/montesprout-site/"
 
     def test_root_absolute_urls_sit_under_the_base_path(self):
-        for f in (INDEX, NOT_FOUND):
+        for f in PAGES:
             for url in parse(f).urls:
                 if not url.startswith("/"):
                     continue
@@ -266,43 +280,59 @@ class BasePathTests(unittest.TestCase):
             self.assertTrue(url.startswith("/"),
                             f"404.html: {url!r} must be root-absolute")
 
-    def test_canonical_matches_the_base_url(self):
-        canonical = [l for l in parse(INDEX).links if l.get("rel") == "canonical"]
-        self.assertEqual(len(canonical), 1)
-        self.assertEqual(canonical[0]["href"], BASE_URL)
+    @staticmethod
+    def canonical_url(page):
+        """The absolute URL a content page declares as its own."""
+        return BASE_URL + ("" if page == INDEX else page.name)
+
+    def test_each_content_page_declares_its_own_canonical(self):
+        for f in CONTENT:
+            canonical = [l for l in parse(f).links if l.get("rel") == "canonical"]
+            self.assertEqual(len(canonical), 1, f"{f.name}: expected one canonical")
+            self.assertEqual(canonical[0]["href"], self.canonical_url(f), f.name)
 
     def test_og_url_matches_the_canonical(self):
-        og = parse(INDEX).meta(property="og:url")
-        self.assertIsNotNone(og, "og:url missing")
-        self.assertEqual(og["content"], BASE_URL)
+        for f in CONTENT:
+            og = parse(f).meta(property="og:url")
+            self.assertIsNotNone(og, f"{f.name}: og:url missing")
+            self.assertEqual(og["content"], self.canonical_url(f), f.name)
 
-    def test_sitemap_loc_matches_the_base_url(self):
-        root = ET.parse(ROOT / "sitemap.xml").getroot()
-        ns = {"s": "http://www.sitemaps.org/schemas/sitemap/0.9"}
-        locs = [e.text for e in root.findall("s:url/s:loc", ns)]
-        self.assertEqual(locs, [BASE_URL])
+    def test_sitemap_lists_exactly_the_content_pages(self):
+        """A page added without a sitemap entry (or an entry pointing nowhere) fails here.
 
-    def test_sitemap_lastmod_is_not_stale(self):
-        """`lastmod` is hand-written, so it goes stale silently — pin it to git.
-
-        The rule: it must not be older than the last commit that touched
-        index.html. Editing the page and forgetting the date turns this red on the
-        next run instead of quietly telling crawlers nothing changed.
+        404.html is deliberately absent — it is noindex.
         """
         root = ET.parse(ROOT / "sitemap.xml").getroot()
         ns = {"s": "http://www.sitemaps.org/schemas/sitemap/0.9"}
-        lastmod = root.findtext("s:url/s:lastmod", namespaces=ns)
-        self.assertIsNotNone(lastmod, "sitemap has no <lastmod>")
-        self.assertRegex(lastmod, r"^\d{4}-\d{2}-\d{2}$", "W3C date format expected")
+        locs = sorted(e.text for e in root.findall("s:url/s:loc", ns))
+        self.assertEqual(locs, sorted(self.canonical_url(f) for f in CONTENT))
 
-        committed = subprocess.run(
-            ["git", "log", "-1", "--format=%cs", "--", "index.html"],
-            cwd=ROOT, capture_output=True, text=True).stdout.strip()
-        if not committed:
-            self.skipTest("index.html has no commit history yet")
-        self.assertGreaterEqual(
-            lastmod, committed,
-            f"sitemap lastmod {lastmod} predates index.html's last commit {committed}")
+    def test_sitemap_lastmod_is_not_stale(self):
+        """Each `lastmod` is hand-written, so it goes stale silently — pin it to git.
+
+        The rule, per page: its `lastmod` must not be older than the last commit that
+        touched that page's file. Editing a page and forgetting its date turns this red
+        on the next run instead of quietly telling crawlers nothing changed.
+        """
+        root = ET.parse(ROOT / "sitemap.xml").getroot()
+        ns = {"s": "http://www.sitemaps.org/schemas/sitemap/0.9"}
+        entries = {e.findtext("s:loc", namespaces=ns): e.findtext("s:lastmod", namespaces=ns)
+                   for e in root.findall("s:url", ns)}
+        checked = 0
+        for page in CONTENT:
+            lastmod = entries.get(self.canonical_url(page))
+            self.assertIsNotNone(lastmod, f"{page.name}: no <lastmod> in the sitemap")
+            self.assertRegex(lastmod, r"^\d{4}-\d{2}-\d{2}$",
+                             f"{page.name}: W3C date format expected")
+            committed = last_commit_date(page)
+            if not committed:
+                continue  # not committed yet — nothing to be stale against
+            checked += 1
+            self.assertGreaterEqual(
+                lastmod, committed,
+                f"{page.name}: sitemap lastmod {lastmod} predates its last commit {committed}")
+        if not checked:
+            self.skipTest("no page has commit history yet")
 
     def test_robots_points_at_the_sitemap(self):
         lines = (ROOT / "robots.txt").read_text().splitlines()
@@ -353,6 +383,111 @@ class HeadMetadataTests(unittest.TestCase):
         self.assertIn("noindex", r["content"])
 
 
+class LinkIntegrityTests(unittest.TestCase):
+    """Every internal link lands somewhere real.
+
+    A multi-page static site has no router to complain, so a renamed file or a typo'd
+    href is a 404 nobody notices until a teacher — or Apple's reviewer following the
+    privacy-policy URL — hits it.
+    """
+
+    def _targets(self, page):
+        for url in parse(page).urls:
+            if url.startswith(("mailto:", "http://", "https://")):
+                continue
+            path, _, fragment = url.partition("#")
+            yield url, path, fragment
+
+    def _resolve(self, page, path):
+        """The file a link's path part names, or None if it points outside the site.
+
+        A path that is empty or ends in "/" names a directory, which the server
+        answers with that directory's index.html — do the same here.
+        """
+        if path.startswith("/"):
+            if not path.startswith(BASE_PATH):
+                return None
+            rest = path[len(BASE_PATH):]
+        else:
+            rest = path
+        if rest == "" or rest.endswith("/") or rest in ("./",):
+            return (page.parent if not path.startswith("/") else ROOT) / rest / "index.html"
+        return (ROOT if path.startswith("/") else page.parent) / rest
+
+    def test_internal_hrefs_resolve_to_real_files(self):
+        for page in PAGES:
+            for url, path, _ in self._targets(page):
+                if not path:
+                    continue  # pure in-page anchor, checked below
+                target = self._resolve(page, path)
+                self.assertIsNotNone(target, f"{page.name}: {url!r} escapes the site base")
+                self.assertTrue(target.exists(),
+                                f"{page.name}: {url!r} points at nothing ({target})")
+
+    def test_fragments_exist_on_the_page_they_point_at(self):
+        for page in PAGES:
+            for url, path, fragment in self._targets(page):
+                if not fragment:
+                    continue
+                target = page if not path else self._resolve(page, path)
+                if target is None or not target.exists():
+                    continue  # the missing-file test above owns this failure
+                self.assertIn(fragment, parse(target).ids,
+                              f"{page.name}: {url!r} — no id={fragment!r} on {target.name}")
+
+    def test_every_content_page_is_reachable_from_every_other(self):
+        # The nav is copy-pasted per page, which is exactly how one page quietly loses
+        # its link to another.
+        for page in CONTENT:
+            hrefs = {h for h, _ in parse(page).anchors}
+            for other in CONTENT:
+                if other == page:
+                    continue
+                self.assertTrue(
+                    any(h.split("#")[0].endswith(other.name) or
+                        (other == INDEX and h.split("#")[0] in ("", "./", "index.html"))
+                        for h in hrefs),
+                    f"{page.name} has no link to {other.name}")
+
+
+class PolicyPageTests(unittest.TestCase):
+    """The privacy policy is the page Apple's reviewer opens — hold it to its own rules."""
+
+    def test_policy_states_a_last_updated_date(self):
+        text = parse(PRIVACY).text
+        m = re.search(r"Last updated (\d{1,2} \w+ \d{4})", text)
+        self.assertIsNotNone(m, "the policy must say when it was last updated")
+
+    def test_last_updated_is_not_older_than_the_file(self):
+        """Editing the policy without moving its date is how a stale policy ships."""
+        from datetime import datetime
+        m = re.search(r"Last updated (\d{1,2} \w+ \d{4})", parse(PRIVACY).text)
+        stated = datetime.strptime(m.group(1), "%d %B %Y").date().isoformat()
+        committed = last_commit_date(PRIVACY)
+        if not committed:
+            self.skipTest("privacy.html has no commit history yet")
+        self.assertGreaterEqual(
+            stated, committed,
+            f"policy says {stated} but the file was last changed {committed}")
+
+    def test_policy_names_the_contact_and_the_opt_out(self):
+        text = parse(PRIVACY).text
+        self.assertIn(EMAIL, text, "the policy must carry a contact address")
+        self.assertIn("Settings", text)
+        self.assertIn("Privacy", text)
+
+    def test_support_page_offers_a_way_to_get_help(self):
+        anchors = [h for h, _ in parse(SUPPORT).anchors]
+        self.assertIn(f"mailto:{EMAIL}", anchors)
+
+    def test_both_pages_are_indexable(self):
+        # A noindex here would hide the very URL App Store Connect is given.
+        for f in (PRIVACY, SUPPORT):
+            robots = parse(f).meta(name="robots")
+            if robots is not None:
+                self.assertNotIn("noindex", robots["content"], f.name)
+
+
 class BrandAssetTests(unittest.TestCase):
     """The favicon and the social card are the mark leaving the site — pin both."""
 
@@ -376,13 +511,13 @@ class BrandAssetTests(unittest.TestCase):
     def test_header_mark_matches_the_favicon(self):
         # Three copies of the mark exist (favicon + both page headers); a change to
         # one and not the others is the drift this catches.
-        for f in (INDEX, NOT_FOUND):
+        for f in PAGES:
             html = f.read_text()
             for d in (self.LEAF_BODY, self.LEAF_VEIN):
                 self.assertIn(d, html, f"{f.name}: header mark diverged from the favicon")
 
     def test_icons_linked_in_both_pages(self):
-        for f in (INDEX, NOT_FOUND):
+        for f in PAGES:
             rels = {l.get("rel"): l.get("href") for l in parse(f).links}
             self.assertIn("icon", rels, f"{f.name}: no favicon link")
             self.assertTrue(rels["icon"].endswith("assets/favicon.svg"))
@@ -447,8 +582,12 @@ class PrivacyClaimTests(unittest.TestCase):
          "report generation sends pseudonymised note text off the device"),
         (r"never (sent|shared)[^“”\".!]{0,20}(our|any) server",
          "the proxy is our server, and the report path posts through it"),
+        # The possessive is widened past the app's own pattern: a marketing page slips
+        # into the third person ("stays on the teacher's device") where the app never
+        # would, and that is the same absolute wearing a different pronoun.
         (r"(observation|note|report|classroom|data|everything)[^“”\".!]{0,40}"
-         r"(stay|stays) (on|in) (this|your) (device|iPhone|phone)",
+         r"(stay|stays) (on|in) (this|your|the [a-z]+’?'?s?|a [a-z]+’?'?s?) "
+         r"(device|iPhone|phone)",
          "iCloud sync and the report path both move this data off the device"),
         (r"(on|to) (your|this) (iPhone|device|phone) only",
          "an absolute framed as a location claim — say what actually leaves, and how"),
@@ -479,7 +618,7 @@ class SunriseTokenTests(unittest.TestCase):
     def test_both_app_faces_are_used(self):
         self.assertIn("'Quicksand'", self.css)
         self.assertIn("'Nunito'", self.css)
-        for f in (INDEX, NOT_FOUND):
+        for f in PAGES:
             fonts = [l["href"] for l in parse(f).links
                      if l.get("rel") == "stylesheet"
                      and "fonts.googleapis.com" in l.get("href", "")]

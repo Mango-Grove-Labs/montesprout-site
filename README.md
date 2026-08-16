@@ -33,16 +33,18 @@ No dependencies to install.
 python3 -m unittest discover -s tests
 ```
 
-42 structural tests stand in for the build step there isn't one of: well-formed pages, no
-stray JavaScript, no undefined CSS classes, working anchors, locked Sunrise tokens, brand
-assets that match the app's mark, privacy claims that stay inside what the app actually
-does, and — the load-bearing one — **base-path consistency** (see below). Stdlib only; no
-install step.
+50 structural tests stand in for the build step there isn't one of: well-formed pages, no
+stray JavaScript, no undefined CSS classes, internal links and anchors that resolve, every
+page reachable from every other, locked Sunrise tokens, brand assets that match the app's
+mark, privacy claims that stay inside what the app actually does, and — the load-bearing
+one — **base-path consistency** (see below). Stdlib only; no install step.
 
 ## Layout
 
 ```
-index.html 404.html        the site
+index.html                 home
+privacy.html support.html  the legal/help pages (the privacy URL App Store Connect needs)
+404.html                   not-found
 assets/                    styles.css (Sunrise tokens at the top), favicon.svg,
                            og-image.png, apple-touch-icon.png
 .nojekyll robots.txt sitemap.xml
@@ -51,10 +53,17 @@ tools/                     make_images.py + the vendored OFL fonts it renders wi
                            (build-time only — never served)
 ```
 
+## Adding a page
+
+Four things move together, and the tests fail until they do: the page itself (relative
+asset paths — only `404.html` is root-absolute), a `<link rel="canonical">` matching its
+real URL, an entry in `sitemap.xml`, and a link from the nav and footer of every other
+page.
+
 ## Brand assets
 
-`assets/favicon.svg` and the header mark in both pages use the app's leaf path **verbatim**
-(`DesignSystem/Motifs.swift` § `LeafArt`). A test asserts all three still agree, so the site
+`assets/favicon.svg` and the header mark on every page use the app's leaf path **verbatim**
+(`DesignSystem/Motifs.swift` § `LeafArt`). A test asserts they still agree, so the site
 can't drift into a second mark.
 
 The two PNGs are generated, not hand-made:
