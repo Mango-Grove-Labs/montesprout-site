@@ -3,8 +3,7 @@
 The public website for **MonteSprout**, a calm iOS app for Montessori teachers, by
 **Mango Grove Labs LLC**. Static pages served by GitHub Pages.
 
-- **Live:** <https://mango-grove-labs.github.io/montesprout-site/>
-- **Planned:** `montesprout.app` (DNS not wired yet — see *Custom domain* below)
+- **Live:** <https://montesprout.app>
 
 No build step, no framework — the repo root *is* the deployed site. A push to `main` is a
 deploy.
@@ -86,23 +85,23 @@ GitHub Pages setup (already done): Settings → Pages → **Deploy from a branch
 
 ## Custom domain
 
-The site is a **project** Pages site today, so it is served under the **`/montesprout-site/`**
-path. When `montesprout.app` is wired up, it moves to the root — and four things move
-together:
+The site serves from the apex **montesprout.app** (since 2026-08-16). Apex `A`/`AAAA` records
+and a `www` CNAME point at GitHub Pages from Namecheap, the repo carries a `CNAME` file, and
+`.app` is on the HSTS preload list — so HTTPS is mandatory here, not optional.
 
-1. add a `CNAME` file containing `montesprout.app`,
-2. `<link rel="canonical">`, `<meta property="og:url">` and the two image URLs in
-   `index.html`,
-3. every root-absolute path in `404.html` (and the sitemap `<loc>` / robots `Sitemap:`),
-4. the DNS records at the registrar, then **Enforce HTTPS** once the check goes green.
+Before that it was a GitHub *project* site under `/montesprout-site/`, and the move touched
+four things at once: the `CNAME` file, every absolute URL (canonical, `og:url`, both image
+URLs, sitemap `<loc>`, robots `Sitemap:`), every root-absolute path in `404.html`, and the
+registrar records.
 
-`robots.txt` starts working at the same moment: crawlers only read it at the host root, and
-`mango-grove-labs.github.io/robots.txt` isn't ours to create — so today the file is committed
-but inert (it says so at the top).
+**The test suite is what made that safe, and still guards it.** `tests/test_site.py` derives
+the expected base from whether `CNAME` exists, so adding the file turned ten tests red, each
+naming a URL still pointing at the old base; the swap was done by working that list to green.
+The same mechanism runs in reverse — delete `CNAME` and the suite immediately expects the
+project-subpath form again.
 
-`tests/test_site.py` derives the expected base path from whether `CNAME` exists, so adding
-that one file turns the suite red on every URL still pointing at the old base — the test
-run *is* the checklist for the swap.
+`robots.txt` only started working at the same moment: crawlers read robots.txt exclusively at
+the host root, which was not ours while the site lived on a subpath.
 
 ## Planning
 

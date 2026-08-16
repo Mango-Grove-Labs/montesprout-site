@@ -33,10 +33,12 @@ Work on this site is planned and reported from there. Commit here, record there.
   fonts it uses are vendored under `tools/fonts/`). Output is deterministic — edit the script
   and re-run, never touch the PNGs by hand. `og:image:width`/`height` are asserted against the
   file's real PNG header, so a resize that skips the meta tags fails the suite.
-- **Base path.** This is a *project* Pages site: it lives under `/montesprout-site/`.
-  `index.html` uses relative asset paths; `404.html` must use **root-absolute** ones (GitHub
-  serves it for any missing depth). The tests derive the expected base from the presence of a
-  `CNAME` file — see README § Custom domain.
+- **Base path.** The site serves from the apex **montesprout.app**, so root-absolute paths are
+  plain `/…`. `index.html` and the content pages use relative asset paths; `404.html` must use
+  **root-absolute** ones (GitHub serves it for any missing depth, so a relative href there
+  resolves differently per URL). The tests derive the expected base from the presence of the
+  `CNAME` file, so removing it flips every expectation back to the old project subpath — see
+  README § Custom domain.
 - **Privacy copy is a contract, not marketing.** Anything the site claims about what leaves a
   teacher's device must match the app's behaviour (architecture §13). If a claim and the code
   disagree, that's a bug to surface in the app repo — never soften the page to fit. Before

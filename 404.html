@@ -18,18 +18,18 @@
   <!-- Absolute (site-root) paths: GitHub serves this one file for ANY missing depth under the
        site, so a relative href would resolve differently per URL. Both values move together when
        the custom domain lands — see README "Custom domain". -->
-  <link rel="icon" type="image/svg+xml" href="/montesprout-site/assets/favicon.svg">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <!-- Safari ignores an SVG in this slot, so the touch icon is a real PNG (tools/make_images.py). -->
-  <link rel="apple-touch-icon" href="/montesprout-site/assets/apple-touch-icon.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 
-  <link rel="stylesheet" href="/montesprout-site/assets/styles.css">
+  <link rel="stylesheet" href="/assets/styles.css">
 </head>
 <body>
 
   <!-- ===== Header ===== -->
   <header class="site-header">
     <div class="container">
-      <a class="brand" href="/montesprout-site/">
+      <a class="brand" href="/">
         <svg class="brand__mark" width="26" height="26" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MonteSprout logo">
           <!-- The app's leaf mark (DesignSystem/Motifs.swift, LeafArt) — keep the two in sync. -->
           <path d="M12 2C5.5 2 2 5.5 2 12c6.5 0 10-3.5 10-10Z" fill="#7C9A74" stroke="#7C9A74" stroke-width="1.2" stroke-linejoin="round"></path>
@@ -38,9 +38,9 @@
         <span class="brand__name">MonteSprout</span>
       </a>
       <nav class="nav" aria-label="Primary">
-        <a href="/montesprout-site/#about">About</a>
-        <a href="/montesprout-site/privacy.html">Privacy</a>
-        <a href="/montesprout-site/support.html">Support</a>
+        <a href="/#about">About</a>
+        <a href="/privacy.html">Privacy</a>
+        <a href="/support.html">Support</a>
         <a href="mailto:support@mangogrovelabs.com">Contact</a>
       </nav>
     </div>
@@ -52,7 +52,7 @@
     <section class="hero">
       <h1 class="hero__title">Page not found</h1>
       <p class="hero__sub">The page you were looking for doesn&rsquo;t exist or may have moved. Let&rsquo;s get you back on track.</p>
-      <a class="pill pill--accent" href="/montesprout-site/">Back to home <span class="pill__arrow" aria-hidden="true">&rarr;</span></a>
+      <a class="pill pill--accent" href="/">Back to home <span class="pill__arrow" aria-hidden="true">&rarr;</span></a>
     </section>
 
   </main>
@@ -62,8 +62,8 @@
     <div class="container">
       <div class="footer__info">
         <div class="footer__links">
-          <a href="/montesprout-site/privacy.html">Privacy</a>
-          <a href="/montesprout-site/support.html">Support</a>
+          <a href="/privacy.html">Privacy</a>
+          <a href="/support.html">Support</a>
         </div>
         <span class="footer__name">MonteSprout</span>
         <span>An app by Mango Grove Labs LLC</span>

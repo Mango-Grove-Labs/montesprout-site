@@ -1,11 +1,9 @@
 # robots.txt — MonteSprout
 #
-# NOTE: this file is INERT while the site is a GitHub *project* site. Crawlers only
-# ever read robots.txt at the host root — https://mango-grove-labs.github.io/robots.txt
-# — which 404s and isn't ours to create (that needs a repo named after the org's
-# github.io host). It becomes live the moment montesprout.app is wired up (ROADMAP 18.4),
-# which is why it's here rather than added later and forgotten.
+# Live as of 2026-08-16, when the site moved to the apex montesprout.app: this file now sits
+# at the host root, which is the only place crawlers read robots.txt. It was inert for as long
+# as the site was served from a project subpath (README § Custom domain has the history).
 User-agent: *
 Allow: /
 
-Sitemap: https://mango-grove-labs.github.io/montesprout-site/sitemap.xml
+Sitemap: https://montesprout.app/sitemap.xml
