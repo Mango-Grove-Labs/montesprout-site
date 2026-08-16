@@ -433,6 +433,42 @@ a { -webkit-tap-highlight-color: transparent; }
   margin: 0;
 }
 
+/* ===== Screenshot strip ===== */
+.shots__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: clamp(22px, 3.5vw, 34px);
+  align-items: start;
+}
+
+.shot { margin: 0; }
+
+.shot__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--hair);
+  border-radius: var(--radius-card);
+  box-shadow: var(--card-shadow);
+  background: var(--surface);
+}
+
+.shot__caption {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin-top: 14px;
+  text-wrap: pretty;
+}
+
+.shots__note {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--ink-faint);
+  margin: clamp(26px, 4vw, 36px) 0 0;
+  text-wrap: pretty;
+}
+
 /* ===== Contact panel ===== */
 .contact { padding: 0 0 clamp(56px, 8vw, 84px); }
 

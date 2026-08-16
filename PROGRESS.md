@@ -45,8 +45,8 @@
   - [x] 18.3 Privacy + support pages
   - [x] 18.5 Landing page — screenshot strip split out to 18.7 (owner call)
   - [x] 18.4 montesprout.app live on enforced HTTPS; org domain-verification TXT in place
-  - [ ] 18.7 Real app screenshots for the landing page — a strip between the highlights and the closing panel; needs an app build, so it waits for a free `MonteSprout` checkout. Sandbox sim clone + DEBUG sample data only — never the home phone's real classroom
-- [ ] 🏁 **MILESTONE: launch-ready site** ← default stop point
+  - [x] 18.7 Real app screenshots — three-shot strip, sample classroom only (no real child data)
+- [x] 🏁 **MILESTONE: launch-ready site** — reached 2026-08-16
 - [ ] **Phase 19 — Post-launch site growth** (web) <!-- backlog, re-filed from the app repo's ROADMAP § 18 -->
   - [ ] 19.1 Cookieless web analytics — blocked on a zero-JS exemption decision (CLAUDE.md bans scripts; the tests assert zero)
   - [ ] 19.2 "Notify me at launch" email capture
@@ -60,21 +60,20 @@
 
 ## Current Status
 
-- **Current phase / sub-phase:** 18.7 — real app screenshots for the landing page
-- **State:** in-progress
-- **Last completed:** 18.4 — montesprout.app live on enforced HTTPS; the base-path test suite drove the swap
-- **Build:** n/a (no build step) · **Tests:** green (50/50, zero skips) · **Simulator-verified:** n/a
+- **Current phase / sub-phase:** none in flight — **Phase 18 is complete**; the site is launch-ready
+- **State:** idle
+- **Last completed:** 18.7 — the screenshot strip (capture → evidence → report), shot from the sample classroom
+- **Build:** n/a (no build step) · **Tests:** green (55/55, zero skips) · **Simulator-verified:** n/a (web)
 
 ---
 
 ## Next Concrete Action
 
-> Implement 18.7: capture a strip of real app screens and slot it into `index.html` between the
-> highlights and the closing panel. Needs a free `~/Developer/MonteSprout` checkout (a build in a
-> checkout another session is using risks the `Package.resolved` drift trap) — build to a `sim-sandbox`
-> clone with DEBUG sample data, never the home phone. Then add the images under `assets/`, keep asset
-> paths relative, and run `python3 -m unittest discover -s tests`.
-
+> **Nothing is queued.** Phase 18 is done and the site is launch-ready at montesprout.app. The
+> remaining phases are all trigger-gated, not scheduled: **19** (analytics → email capture → headline
+> A/B) waits on the zero-JS decision in Needs You; **20** (school-admin one-pager) waits on the
+> school-paid conversation; **21** (design pass) is post-tester. Pick one deliberately rather than by
+> frontier order.
 ---
 
 ## Open Decisions (reversible — defaults chosen, proceeding)

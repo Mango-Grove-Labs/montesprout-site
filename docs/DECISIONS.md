@@ -189,3 +189,38 @@ rejected on three grounds, none of them taste:
   `prefers-reduced-motion` handling.
 The version worth building is a real A/B — one variant per visitor, held stable, measured — which is why
 it is filed as **19.3, explicitly downstream of 19.1**, not as a rotation feature.
+
+## 2026-08-16 — Phase 18.7: the screenshots, taken without disturbing a concurrent session
+
+Three real screens now sit between the highlights and the closing panel: **capture → evidence →
+report**, mirroring the headline's own logic (a note becomes evidence becomes a report).
+
+1. **The build ran in a throwaway `git worktree`, not the shared checkout.** Another session was mid-
+   Phase-49 in `~/Developer/MonteSprout`, and this repo's app has a documented trap where an ordinary
+   build drifts `Package.resolved` in the working tree. A worktree gets its **own** checkout of that
+   file and its own DerivedData, so the isolation is structural rather than careful. Verified after the
+   build: zero drift in either tree. It also builds a *commit*, so the screenshots show reviewed code
+   rather than the other session's in-flight UI. Cost: ~100s and one full package resolve.
+2. **`flowdeck config` was snapshotted and restored.** It is global per-machine, so pointing it at the
+   worktree would have silently redirected the other session's bare invocations. Every command passed
+   `-w`/`-S` explicitly and the original config was written back verbatim afterwards.
+3. **No real child data, and it was verified rather than assumed.** The sandbox clone inherits the home
+   phone's state, so before shooting anything the on-screen names were checked against
+   `Models/SampleData.swift`: Maya, Leo, Ava, Noah, Frida, Theo, Iris, Sam, Nina, Omar, Ruby, Eli,
+   teacher Sarah, "Primary Room", Spring 2026 — an exact match for the fixed-UUID sample fixtures. The
+   page says so in a line under the strip.
+4. **No AI call was made.** The report screenshot is a report the sample data already contains ("Up to
+   date — no new observations since this was generated"), so nothing was sent to the provider and no
+   budget was spent to produce a marketing image.
+5. **`simctl` was used for the image capture only — a deliberate, disclosed exception** to the
+   FlowDeck-for-everything rule. FlowDeck's screenshots are agent-optimized: it returns 402×874 (1×),
+   which is too soft for a retina web page, and it exposes no scale option. Navigation, build, install
+   and launch all went through FlowDeck; only the pixel grab went to `xcrun simctl io … screenshot`,
+   which yields the native 1206×2622.
+6. **WebP at 600px wide, not PNG.** The same three images are 715 KB as PNG and **95 KB as WebP** — a
+   7.5× difference on a page whose whole pitch is that it is light. WebP has been universally supported
+   since 2020. 600px keeps them crisp at 2× for the ~280px they actually render at.
+7. **A test now pins them** (`ScreenshotTests`): every `<img>` resolves to a real file, carries alt text
+   long enough to describe rather than label, declares `width`/`height` **matching the file's real
+   dimensions** (parsed from the WebP header — mismatched values ship as layout shift), and is lazy.
+   Plus a guard asserting the strip exists at all, so the class can't pass vacuously if it is removed.

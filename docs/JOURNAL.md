@@ -218,3 +218,30 @@ it can't quietly go vacuous again. Both were red-checked by planting the failure
 reason the first version's uselessness was ever noticed.
 
 52 tests green (+2). Verified at 1280px and 390px.
+
+## 2026-08-16 — Phase 18.7: real screenshots, and how to build beside a busy session
+
+The landing page shows three real screens now — the quick-note sheet, a child's evidence page, and a
+generated report with its "Evidence used" panel open. That last one is the point: the headline claims
+reports come from evidence rather than memory, and the screenshot shows the dated notes sitting under
+the paragraph.
+
+**The interesting part was doing it while another session held the app checkout.** A `git worktree` at
+the last commit solved it structurally: its own `Package.resolved`, its own DerivedData, and it builds a
+commit rather than someone's work in progress. Zero drift in either tree afterwards. The one global thing
+that *would* have leaked is `flowdeck config` — it is per-machine, so it was snapshotted and restored,
+and every command passed `-w`/`-S` explicitly. Own sim clone via `sim-sandbox start`, deleted after;
+theirs untouched.
+
+Two safety checks worth repeating. The sandbox clone inherits the home phone's data, so the names on
+screen were verified against `SampleData.swift` before a single shot was taken — Maya, Leo, Ava… teacher
+Sarah, Primary Room — an exact match for the fixed-UUID fixtures, so no real child appears. And the
+report screenshot needed no AI call at all: the sample data already carried a generated report.
+
+Gotchas: **FlowDeck's screenshots are 1× (402×874) with no scale option** — fine for agent verification,
+too soft for a retina page, so the pixel grab (only) went through `simctl` for the native 1206×2622.
+**WebP over PNG** was a 715 KB → 95 KB difference. And the full-page browser screenshot showed three
+blank boxes at first, which was `loading="lazy"` not a broken asset — worth knowing before debugging the
+wrong thing.
+
+55 tests green (+3). Verified at desktop and phone widths.
