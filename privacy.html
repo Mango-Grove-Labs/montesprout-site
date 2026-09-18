@@ -65,12 +65,12 @@
     <article class="page">
 
       <h1 class="page__title">MonteSprout Privacy Policy</h1>
-      <p class="page__meta">Last updated 16 August 2026 &middot; Mango Grove Labs LLC &middot; <a href="mailto:support@mangogrovelabs.com">support@mangogrovelabs.com</a></p>
+      <p class="page__meta">Last updated 18 September 2026 &middot; Mango Grove Labs LLC &middot; <a href="mailto:support@mangogrovelabs.com">support@mangogrovelabs.com</a></p>
 
       <section class="summary">
         <h2>The short version</h2>
         <p>MonteSprout is local-first. Your classroom records &mdash; observations, student names, photos, videos and voice notes &mdash; are stored on your device and in your own private iCloud. We run no accounts and no classroom-data servers, and we cannot read your classroom records.</p>
-        <p>There are two narrow exceptions, both described in full below. When you generate a report, the note text is sent for AI drafting with the child&rsquo;s name swapped for a stand-in first, and neither we nor the AI provider keeps a copy. And the app can send anonymous crash and usage statistics, which you can turn off in <strong>Settings &rarr; Privacy</strong>.</p>
+        <p>There are three narrow exceptions, all described in full below. When you generate a report, the note text is sent for AI drafting with the child&rsquo;s name swapped for a stand-in first, and neither we nor the AI provider keeps a copy. When you hand a colleague a join code &mdash; or ask your lead teacher to invite you &mdash; we hold a short-lived, encrypted note that lets the two of you connect, and we cannot open it. And the app can send anonymous crash and usage statistics, which you can turn off in <strong>Settings &rarr; Privacy</strong>.</p>
       </section>
 
       <div class="legal">
@@ -78,6 +78,7 @@
         <h2 id="what-you-put-in">1. What you put in, and where it lives</h2>
         <p>Observations, student names (the app stores a first name and an optional last initial, never a surname), curriculum records, report drafts, photos, videos and voice notes are stored in a database on your device.</p>
         <p>If you are signed into iCloud, they sync through your <strong>private</strong> iCloud database (Apple CloudKit), which only your Apple account &mdash; and co-teachers you explicitly invite to a classroom &mdash; can reach. Mango Grove Labs has no access to this data and operates no server that stores it.</p>
+        <p><strong>Joining a classroom by code, or asking to be invited.</strong> Apple&rsquo;s invitation is a link, and a link does not always reach the right phone. So MonteSprout offers two shortcuts, and each one parks a small record on our server for up to 24 hours. A <strong>join code</strong> stores your classroom&rsquo;s iCloud invitation link; a <strong>request to be invited</strong> stores the name you typed and an opaque identifier for your Apple account. In both cases the record is <strong>encrypted with a key derived from the eight-character code itself</strong>, which is spoken or messaged from one teacher to the other and never sent to us &mdash; so we hold something we cannot open, and neither can anyone who obtains the database. Each record is filed under a one-way hash of the code, cannot be listed or searched, is deleted as soon as it is used, and expires within 24 hours in any case. No observation, no child&rsquo;s name and no classroom content is ever part of it, and a request grants nothing on its own: the lead teacher still chooses whether to invite you, and at what level.</p>
 
         <h2 id="ai-drafting">2. AI report drafting &mdash; the one time note text leaves your device</h2>
         <p>When you ask MonteSprout to draft a report, the app sends the relevant observation text and curriculum or lesson names through our relay server to an AI provider (currently OpenAI). <strong>The child&rsquo;s name is replaced with a stand-in before anything is sent</strong>, and the real name is restored on your device afterwards. Photos, videos and audio are never sent.</p>
